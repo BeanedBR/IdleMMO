@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc5bc1a309570c0459c10358f5f436cf, type: 3}
   m_Name: NormalLogs
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Items.ItemData
-  id: 
+  id: 001
   displayName: Normal Logs

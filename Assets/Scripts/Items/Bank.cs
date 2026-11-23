@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.Hierarchy;
 using UnityEngine;
 
-namespace Assets.Scripts.Items
+namespace Assets.Data.Items
 {
     public sealed class Bank
     {

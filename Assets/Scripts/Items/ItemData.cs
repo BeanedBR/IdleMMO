@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Items
+namespace Assets.Data.Items
 {
     // Create definitions of each of the items (Normal Logs, Oak Logs, Sardines, Trout, Copper Ore, etc...)
     // Describes what an item is...
