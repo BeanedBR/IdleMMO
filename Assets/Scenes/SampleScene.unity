@@ -148,7 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e0f10b89cdb0c46bc9111132d0fae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WoodcuttingTester
-  startNormalTreeOnPlay: 1
+  startNormalTreeOnPlay: 0
+  normalLogs: {fileID: 11400000, guid: 530d9893ea19dc443be93d65131af94a, type: 2}
+  oakLogs: {fileID: 11400000, guid: 7ca1a9555e6663c4cbfb10b17a8b76a1, type: 2}
+  LogsToRemove: 3
+  LogTypeToRemove: {fileID: 11400000, guid: 530d9893ea19dc443be93d65131af94a, type: 2}
 --- !u!4 &218794149
 Transform:
   m_ObjectHideFlags: 0
@@ -278,7 +282,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 0
+  m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
