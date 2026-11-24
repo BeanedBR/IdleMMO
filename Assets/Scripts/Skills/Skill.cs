@@ -21,7 +21,7 @@ namespace Assets.Scripts.Skills
             Xp = (int)Math.Min((long)Xp + amount, int.MaxValue);
 
             int oldLevel = Level;
-            // Create Experience table to get level for xp
+            Level = ExperienceTable.GetLevelForXp(Xp);
             return Level - oldLevel;
         }
     }
