@@ -11,6 +11,7 @@ namespace Assets.Scripts.Skills.Woodcutting
         private readonly int xpPerLog;
         private readonly ItemData logItem; // ItemData (ScriptableObject)
         private readonly TickTimer timer;
+        private readonly Skill skill;
 
         public int LogsCut {  get; private set; }
         public int XpGained { get; private set; }
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Skills.Woodcutting
             this.xpPerLog = xpPerLog;
             this.logItem = logItem;
             timer = new TickTimer(TickTimer.SecondsToTicks(secondsPerLog));
+            skill = SkillManager.Instance.Get(SkillType.Woodcutting);
         }
 
         public void Start()
@@ -48,8 +50,15 @@ namespace Assets.Scripts.Skills.Woodcutting
             LogsCut++;
             XpGained += xpPerLog;
 
-            // Display log item when cut + how many player has in bank:
-            Debug.Log($"{Name}: log cut. Bank now has {Bank.Instance.GetQuantity(logItem)}");
+            int levelsGained = skill.AddXp(xpPerLog);
+
+            Debug.Log($"{Name}: log cut! Bank now has {Bank.Instance.GetQuantity(logItem)}. " +
+                $"Woodcutting XP: {skill.Xp}");
+
+            if (levelsGained > 0)
+            {
+                Debug.Log($"Level up! Woodcutting is now level {skill.Level}");
+            }
         }
     }
 }

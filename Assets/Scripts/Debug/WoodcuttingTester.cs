@@ -5,6 +5,7 @@ using Assets.Data.Items;
 using UnityEngine;
 using Unity.VisualScripting;
 using System;
+using Assets.Scripts.Skills;
 
 public sealed class WoodcuttingTester : MonoBehaviour
 {
@@ -54,6 +55,28 @@ public sealed class WoodcuttingTester : MonoBehaviour
             Debug.Log($"Bank: {entry.Key.DisplayName} x{entry.Value}");
         }
     }
+
+    [ContextMenu("Print Skills")]
+    private void PrintSkills()
+    {
+        foreach (Skill skill in SkillManager.Instance.All)
+        {
+            int nextLevelXp = ExperienceTable.GetXpForLevel(skill.Level + 1);
+
+            Debug.Log($"{skill.Type}: level {skill.Level}, {skill.Xp} XP " +
+                    $"(next level at {nextLevelXp} XP)");
+        }
+    }
+
+    [ContextMenu("Add 100,000 Woodcutting XP")]
+    private void AddLotsOfXP()
+    {
+        Skill woodcutting = SkillManager.Instance.Get(SkillType.Woodcutting);
+        int levelsGained = woodcutting.AddXp(100000);
+        Debug.Log($"+100,000 XP: gained {levelsGained} levels, Woodcutting is now level {woodcutting.Level}");
+
+    }
+
 
     [ContextMenu("Remove x amount of Logs")]
     private void RemoveNormalLogs()
