@@ -27,6 +27,7 @@ namespace Assets.Scripts.Skills.Woodcutting
             skill = SkillManager.Instance.Get(SkillType.Woodcutting);
         }
 
+        // Checks whether the player can start this action (can't start if they are not the required level the tree requires)
         public bool CanStart(out string reason)
         {
             if (tree.LogItem == null)

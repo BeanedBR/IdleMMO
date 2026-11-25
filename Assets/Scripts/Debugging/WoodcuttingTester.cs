@@ -22,6 +22,7 @@ namespace Assets.Scripts.Debugging
         // One action per tree in the same order as the trees list:
         private WoodcuttingAction[] actions;
 
+        // Create the actions from TreeData[] trees:
         private void Awake()
         {
             actions = new WoodcuttingAction[trees.Length];
@@ -78,6 +79,7 @@ namespace Assets.Scripts.Debugging
             }
         }
 
+        // Start the action of the current tree selected:
         private void StartTree(int index)
         {
             if (index < 0 || index >= actions.Length || actions[index] == null)
