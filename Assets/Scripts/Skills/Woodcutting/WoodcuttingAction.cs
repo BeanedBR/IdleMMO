@@ -60,5 +60,10 @@ namespace Assets.Scripts.Skills.Woodcutting
                 Debug.Log($"Level up! Woodcutting is now level {skill.Level}");
             }
         }
+
+        public bool CanStart(out string reason)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
