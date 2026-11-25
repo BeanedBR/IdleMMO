@@ -35,19 +35,27 @@ namespace Assets.Scripts.Core.Actions
         private ActionManager() { } // Only one ActionManager from Instance
 
         // Puts an action into the single slot, stops whatever previous action was running in that place:
-        public void StartAction(IGameAction action)
+        public bool StartAction(IGameAction action)
         {
             if (action == null)
             {
                 StopAction();
-                return;
+                return false;
             }
 
-            if (action == CurrentAction) return; // It's already doing this
+            if (action == CurrentAction) return true; // It's already doing this
+
+            // Checks before stopping the current action so the player doesn't go idle if they click a locked tree:
+            if (!action.CanStart(out string reason))
+            {
+                Debug.Log($"Can't start {action.Name}: {reason}");
+                return false;
+            }
 
             CurrentAction?.Stop(); // stop the old action if there is one
             CurrentAction = action; // swap out the old action with the new one
             CurrentAction.Start(); // start the new action
+            return true;
         }
 
         // Empty the first slot, player is idle

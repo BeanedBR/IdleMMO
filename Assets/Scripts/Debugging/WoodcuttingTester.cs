@@ -11,37 +11,58 @@ namespace Assets.Scripts.Debugging
 {
     public sealed class WoodcuttingTester : MonoBehaviour
     {
-        [SerializeField] private bool startNormalTreeOnPlay = true;
+        [SerializeField, Tooltip("Tree assets to test with")]
+        private TreeData[] trees;
 
-        [Header("Item assets")]
-        [SerializeField] private ItemData normalLogs;
-        [SerializeField] private ItemData oakLogs;
+        [SerializeField, Tooltip("Position in the trees list used by 'Start Selected Tree' (0 = first tree, 1 = second tree, etc...)")]
+        private int selectedTree;
 
-        [SerializeField] private int LogsToRemove = 3;
-        [SerializeField] private ItemData LogTypeToRemove;
+        [SerializeField] private bool startFirstTreeOnPlay = true;
 
-        private WoodcuttingAction normalTree;
-        private WoodcuttingAction oakTree;
+        // One action per tree in the same order as the trees list:
+        private WoodcuttingAction[] actions;
 
+        // Create the actions from TreeData[] trees:
         private void Awake()
         {
-            normalTree = new WoodcuttingAction("Normal Tree", 3f, 10, normalLogs);
-            oakTree = new WoodcuttingAction("Oak Tree", 4f, 15, oakLogs);
+            actions = new WoodcuttingAction[trees.Length];
+            for (int i = 0; i < trees.Length; i++)
+            {
+                if (trees[i] != null) actions[i] = new WoodcuttingAction(trees[i]);
+            }
         }
 
         private void Start()
         {
-            if (startNormalTreeOnPlay) StartNormalTree();
+            if (startFirstTreeOnPlay) StartTree(0);
         }
 
-        [ContextMenu("Start Normal Tree")]
-        private void StartNormalTree() => ActionManager.Instance.StartAction(normalTree);
-
-        [ContextMenu("Start Oak Tree")]
-        private void StartOakTree() => ActionManager.Instance.StartAction(oakTree);
+        [ContextMenu("Start Selected Tree")]
+        private void StartSelectedTree() => StartTree(selectedTree);
 
         [ContextMenu("Stop Action")]
         private void StopAction() => ActionManager.Instance.StopAction();
+
+        [ContextMenu("Add 1,000 Woodcutting XP")]
+        private void AddXP()
+        {
+            Skill woodcutting = SkillManager.Instance.Get(SkillType.Woodcutting);
+            int levelsGained = woodcutting.AddXp(1_000);
+            Debug.Log($"+1,000 XP: gained {levelsGained} levels, Woodcutting is now level {woodcutting.Level}");
+
+        }
+
+        [ContextMenu("Print Skills")]
+        private void PrintSkills()
+        {
+            foreach (Skill skill in SkillManager.Instance.All)
+            {
+                int nextLevelXp = ExperienceTable.GetXpForLevel(skill.Level + 1);
+
+                Debug.Log($"{skill.Type}: level {skill.Level}, {skill.Xp} XP " +
+                        $"(next level at {nextLevelXp} XP)");
+            }
+        }
 
         [ContextMenu("Print Bank")]
         private void PrintBank()
@@ -58,35 +79,16 @@ namespace Assets.Scripts.Debugging
             }
         }
 
-        [ContextMenu("Print Skills")]
-        private void PrintSkills()
+        // Start the action of the current tree selected:
+        private void StartTree(int index)
         {
-            foreach (Skill skill in SkillManager.Instance.All)
+            if (index < 0 || index >= actions.Length || actions[index] == null)
             {
-                int nextLevelXp = ExperienceTable.GetXpForLevel(skill.Level + 1);
-
-                Debug.Log($"{skill.Type}: level {skill.Level}, {skill.Xp} XP " +
-                        $"(next level at {nextLevelXp} XP)");
+                Debug.LogWarning($"No tree at position {index} in the trees list.");
+                return;
             }
-        }
 
-        [ContextMenu("Add 100,000 Woodcutting XP")]
-        private void AddLotsOfXP()
-        {
-            Skill woodcutting = SkillManager.Instance.Get(SkillType.Woodcutting);
-            int levelsGained = woodcutting.AddXp(100000);
-            Debug.Log($"+100,000 XP: gained {levelsGained} levels, Woodcutting is now level {woodcutting.Level}");
-
-        }
-
-
-        [ContextMenu("Remove x amount of Logs")]
-        private void RemoveNormalLogs()
-        {
-            bool removed = Bank.Instance.TryRemove(LogTypeToRemove, LogsToRemove);
-            Debug.Log(removed
-                ? $"Removed {LogsToRemove} {LogTypeToRemove.DisplayName}. {Bank.Instance.GetQuantity(LogTypeToRemove)} left"
-                : $"Not enough {LogTypeToRemove.DisplayName} Logs (have {Bank.Instance.GetQuantity(LogTypeToRemove)}), nothing removed");
+            ActionManager.Instance.StartAction(actions[index]);
         }
     }
 }

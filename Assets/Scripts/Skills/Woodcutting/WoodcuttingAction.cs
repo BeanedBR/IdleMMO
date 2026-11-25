@@ -7,27 +7,43 @@ namespace Assets.Scripts.Skills.Woodcutting
 {
     public sealed class WoodcuttingAction : IGameAction
     {
-        private readonly string treeName;
-        private readonly int xpPerLog;
-        private readonly ItemData logItem; // ItemData (ScriptableObject)
+        private readonly TreeData tree;
         private readonly TickTimer timer;
         private readonly Skill skill;
 
         public int LogsCut {  get; private set; }
         public int XpGained { get; private set; }
 
-        public string Name => $"Woodcutting: {treeName}";
+        public TreeData Tree => tree;
+        public string Name => $"Woodcutting: {tree.DisplayName}";
 
         // 0 to 1, progress bar for later (XP & Levelling):
         public float Progress => timer.Progress;
 
-        public WoodcuttingAction(string treeName, float secondsPerLog, int xpPerLog, ItemData logItem)
+        public WoodcuttingAction(TreeData tree)
         {
-            this.treeName = treeName;
-            this.xpPerLog = xpPerLog;
-            this.logItem = logItem;
-            timer = new TickTimer(TickTimer.SecondsToTicks(secondsPerLog));
+            this.tree = tree;
+            timer = new TickTimer(TickTimer.SecondsToTicks(tree.SecondsPerLog));
             skill = SkillManager.Instance.Get(SkillType.Woodcutting);
+        }
+
+        // Checks whether the player can start this action (can't start if they are not the required level the tree requires)
+        public bool CanStart(out string reason)
+        {
+            if (tree.LogItem == null)
+            {
+                reason = $"{tree.DisplayName} has no log item set in its asset.";
+                return false;
+            }
+
+            if (skill.Level < tree.LevelRequired)
+            {
+                reason = $"Requires woodcutting level {tree.LevelRequired} (Current level is {skill.Level}).";
+                return false;
+            }
+
+            reason = string.Empty;
+            return true;
         }
 
         public void Start()
@@ -46,13 +62,13 @@ namespace Assets.Scripts.Skills.Woodcutting
         {
             if (!timer.Tick()) return; // not finished cutting yet
 
-            Bank.Instance.Add(logItem); // add item to player's bank
+            Bank.Instance.Add(tree.LogItem); // add item to player's bank
             LogsCut++;
-            XpGained += xpPerLog;
+            XpGained += tree.XPPerLog;
 
-            int levelsGained = skill.AddXp(xpPerLog);
+            int levelsGained = skill.AddXp(tree.XPPerLog);
 
-            Debug.Log($"{Name}: log cut! Bank now has {Bank.Instance.GetQuantity(logItem)}. " +
+            Debug.Log($"{Name}: log cut! Bank now has {Bank.Instance.GetQuantity(tree.LogItem)}. " +
                 $"Woodcutting XP: {skill.Xp}");
 
             if (levelsGained > 0)
