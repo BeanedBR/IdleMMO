@@ -67,6 +67,19 @@ namespace Assets.Scripts.Core.Actions
             CurrentAction = null;
         }
 
+        // Toggle action - if the action passed through is the current action then it stops else starts new action:
+        public void ToggleAction(IGameAction action)
+        {
+            if (action != null && action == CurrentAction)
+            {
+                StopAction();
+            }
+            else
+            {
+                StartAction(action);
+            }
+        }
+
         // Called by the TickSystem every tick, passes it to the only action active:
         public void Tick()
         {

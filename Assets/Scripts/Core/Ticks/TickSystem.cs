@@ -26,6 +26,9 @@ namespace Assets.Scripts.Core.Ticks
         // Real time that has passed but hasn't yet added up to a full tick:
         private double accumulator;
 
+        // 0 to 1: how far we are towards the next tick, based on real time (used only for smoother visuals):
+        public float TickFraction => (float)Math.Min(accumulator / SecondsPerTick, 1.0);
+
         public void Register(ITickable tickable)
         {
             if (tickable == null || tickables.Contains(tickable)) return;

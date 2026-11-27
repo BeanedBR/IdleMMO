@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b62d19a1b9fcad4fae2aebcb3ee615c, type: 3}
+  m_Name: WillowTree
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Skills.Woodcutting.TreeData
+  id: willow_tree
+  displayName: Willow Tree
+  displayImage: {fileID: -8266918170633092291, guid: 7c5574355001ae3459691e3194fbfa78, type: 3}
+  levelRequired: 30
+  secondsPerLog: 5
+  xpPerLog: 30
+  logItem: {fileID: 11400000, guid: 7ca1a9555e6663c4cbfb10b17a8b76a1, type: 2}

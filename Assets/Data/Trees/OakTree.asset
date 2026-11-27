@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Skills.Woodcutting.TreeData
   id: oak_tree
   displayName: Oak Tree
-  levelRequired: 5
+  displayImage: {fileID: -6800927168972201395, guid: 5f6abab8a9633364795499d5cf87ccbf, type: 3}
+  levelRequired: 15
   secondsPerLog: 4
   xpPerLog: 15
   logItem: {fileID: 11400000, guid: 7ca1a9555e6663c4cbfb10b17a8b76a1, type: 2}

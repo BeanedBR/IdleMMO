@@ -19,6 +19,7 @@ namespace Assets.Scripts.Skills.Woodcutting
 
         // 0 to 1, progress bar for later (XP & Levelling):
         public float Progress => timer.Progress;
+        public float SmoothProgress => timer.GetSmoothProgress(TickRunner.Ticks.TickFraction);
 
         public WoodcuttingAction(TreeData tree)
         {
@@ -38,7 +39,7 @@ namespace Assets.Scripts.Skills.Woodcutting
 
             if (skill.Level < tree.LevelRequired)
             {
-                reason = $"Requires woodcutting level {tree.LevelRequired} (Current level is {skill.Level}).";
+                reason = $"Requires:\n Woodcutting level {tree.LevelRequired}";
                 return false;
             }
 

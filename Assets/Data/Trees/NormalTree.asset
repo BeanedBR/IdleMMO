@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Skills.Woodcutting.TreeData
   id: normal_tree
   displayName: Normal Tree
+  displayImage: {fileID: -1638858808431564669, guid: 858401732cf06c44a9c23d8e2dfde685, type: 3}
   levelRequired: 1
   secondsPerLog: 3
   xpPerLog: 10
