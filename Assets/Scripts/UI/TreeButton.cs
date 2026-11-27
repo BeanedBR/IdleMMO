@@ -1,16 +1,19 @@
+using Assets.Scripts.Skills.Woodcutting;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TreeButton : MonoBehaviour
+namespace Assets.UI.Woodcutting
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class TreeButton : MonoBehaviour
     {
-        
+        [SerializeField] private Button button;
+        [SerializeField] private TMP_Text nameText;
+
+        [SerializeField] private TMP_Text detailsText;
+        [SerializeField] private Image progressFill;
+
+        private WoodcuttingAction action;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
