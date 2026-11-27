@@ -48,5 +48,12 @@ namespace Assets.Scripts.Core.Ticks
             ElapsedTicks = 0;
             return true;
         }
+
+        // Smooths between tick (visuals only e.g. progress bars):
+        public float GetSmoothProgress(float tickFraction)
+        {
+            if (!IsRunning || IntervalTicks == 0) return 0f;
+            return Math.Min(1f, (ElapsedTicks + tickFraction) / IntervalTicks);
+        }
     }
 }

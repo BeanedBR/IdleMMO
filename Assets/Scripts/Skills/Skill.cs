@@ -13,6 +13,19 @@ namespace Assets.Scripts.Skills
             Type = type;
         }
 
+        // 0 to 1
+        public float ProgressToNextLevel
+        {
+            get
+            {
+                if (Level >= ExperienceTable.MaxLevel) return 1f;
+
+                int currentLevelXp = ExperienceTable.GetXpForLevel(Level);
+                int nextLevelXp = ExperienceTable.GetXpForLevel(Level + 1);
+                return (float)(Xp - currentLevelXp) / (nextLevelXp - currentLevelXp);
+            }
+        }
+
         public int AddXp(int amount)
         {
             if (amount <= 0) return 0;

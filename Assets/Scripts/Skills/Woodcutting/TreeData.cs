@@ -14,6 +14,9 @@ namespace Assets.Scripts.Skills.Woodcutting
         [SerializeField, Tooltip("Name shown to the player.")]
         private string displayName;
 
+        [SerializeField, Tooltip("Image shown to the player.")]
+        private Sprite displayImage;
+
         [SerializeField, Min(1), Tooltip("Level required to cut this tree.")]
         private int levelRequired = 1;
 
@@ -28,6 +31,7 @@ namespace Assets.Scripts.Skills.Woodcutting
 
         public string Id => id;
         public string DisplayName => displayName;
+        public Sprite DisplayImage => displayImage;
         public int LevelRequired => levelRequired;
         public float SecondsPerLog => secondsPerLog;
         public int XPPerLog => xpPerLog;
