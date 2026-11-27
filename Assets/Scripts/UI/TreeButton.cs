@@ -34,7 +34,7 @@ namespace Assets.Scripts.UI
 
         private void OnClicked()
         {
-            ActionManager.Instance.StartAction(action);
+            ActionManager.Instance.ToggleAction(action);
         }
 
         private void Update()
@@ -52,6 +52,7 @@ namespace Assets.Scripts.UI
                 : reason;
 
             progressFill.fillAmount = isActive ? action.SmoothProgress : 0f;
+            button.image.color = isActive ? new Color32(81, 81, 81, 255) : new Color32(113, 113, 113, 255);
         }
     }
 
